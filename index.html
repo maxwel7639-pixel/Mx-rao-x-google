@@ -181,9 +181,10 @@ section[id] { scroll-margin-top: 24px; }
   background: color-mix(in srgb, var(--color-accent-900) 70%, transparent); color: var(--color-accent); }
 .get .ico svg { display: block; }
 .get h3 { font-family: var(--font-heading); font-weight: 600; font-size: 23px; line-height: 1.2; margin: 0; }
-.get p { font-size: 15px; line-height: 24px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent); max-width: 52ch; }
+.get p { font-size: 15px; line-height: 24px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent); max-width: 52ch;
+  grid-column: 1 / -1; }
 @media (min-width: 760px) { .get { grid-template-columns: 44px minmax(0, 280px) 1fr; align-items: baseline; }
-  .get .ico { align-self: start; } .get p { margin-top: 0; } }
+  .get .ico { align-self: start; } .get p { margin-top: 0; grid-column: auto; } }
 
 /* como funciona */
 .steps { display: grid; gap: var(--leading); margin-top: calc(1.5 * var(--leading)); counter-reset: step; }
@@ -201,7 +202,8 @@ section[id] { scroll-margin-top: 24px; }
     var(--color-section);
   padding: calc(2.5 * var(--leading)) 0; overflow: hidden; }
 .band::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: url("uploads/pasted-1784291992289-0.png") left center / cover no-repeat; opacity: .9; }
+  background: url("uploads/band-bg-desktop.jpeg") left center / cover no-repeat; opacity: .9; }
+@media (max-width: 768px) { .band::before { background-image: url("uploads/band-bg-mobile.jpeg"); background-position: center top; } }
 .band::after { content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-section) 55%, transparent) 55%, var(--color-section) 92%); }
 .band .wrap { position: relative; z-index: 1; }
