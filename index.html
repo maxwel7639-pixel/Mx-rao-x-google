@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Raio-X do Google — MX Digital</title>
+<script src="./ds-base.js"></script>
+<script src="./image-slot.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ——— MX Digital brand overrides on the Nocturne token layer ——— */
+:root {
+  --color-bg: #080808;
+  --color-surface: #121017;
+  --color-text: #ece9f4;
+  --color-accent: #8B7CF8;
+  --color-accent-strong: #6D5CF5;
+  --color-divider: color-mix(in srgb, #ece9f4 14%, transparent);
+  --color-accent-100: #e8e4fd;
+  --color-accent-300: #b6aafa;
+  --color-accent-700: #3a2d80;
+  --color-accent-800: #271e58;
+  --color-accent-900: #191238;
+  --color-neutral-700: #4a4656;
+  --color-section: #17103d;
+  --color-section-glow: #251a63;
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-heading-weight: 600;
+  --leading: 28px;
+  --half: 14px;
+  --edge: clamp(20px, 5vw, 72px);
+  --measure: 58ch;
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 720px at 82% -160px,
+      color-mix(in srgb, var(--color-accent-900) 85%, transparent), transparent 60%),
+    radial-gradient(1100px 800px at -10% 100%,
+      color-mix(in srgb, black 40%, transparent), transparent 55%),
+    var(--color-bg);
+  text-wrap: pretty;
+  font-family: var(--font-body);
+}
+a { color: var(--color-accent); }
+a:hover { color: var(--color-accent-300); }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 var(--edge); }
+.nav { padding-inline: max(var(--edge), calc((100% - 1100px) / 2 + var(--edge))); }
+.nav a { white-space: nowrap; }
+@media (max-width: 560px) { .nav a { display: none; } }
+.nav-brand em { font-style: normal; color: var(--color-accent); }
+
+.rule { height: 1px; border: 0; margin: 0;
+  background: linear-gradient(to right, transparent, var(--color-divider) 48px calc(100% - 48px), transparent); }
+
+.kicker {
+  display: block; font-family: var(--font-body);
+  font-size: 12px; line-height: var(--half); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--color-accent); font-weight: 600; font-feature-settings: "tnum" 1;
+  margin: 0 0 calc(var(--leading) - var(--half));
+}
+
+/* ——— hero ——— */
+.hero-bg { position: relative; }
+.hero-bg::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("uploads/pasted-1784291249945-0.png") center / cover no-repeat; opacity: 1; }
+.hero-bg::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(8,8,8,.15), rgba(8,8,8,.35) 70%, var(--color-bg)); }
+.hero-bg .wrap { position: relative; z-index: 1; }
+.hero { padding: calc(2.5 * var(--leading)) 0 calc(2.5 * var(--leading));
+  display: grid; gap: calc(2 * var(--leading)) clamp(32px, 5vw, 80px); align-items: center; }
+@media (min-width: 900px) { .hero { grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); padding-top: calc(3.5 * var(--leading)); } }
+.display {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: clamp(40px, 6vw, 72px); line-height: 1.08;
+  letter-spacing: 0.002em; margin: 0;
+}
+.display .hl { color: var(--color-accent); font-style: italic; }
+.hero .sub { font-size: 16.5px; line-height: var(--leading); max-width: 46ch;
+  margin: var(--leading) 0 0; color: color-mix(in srgb, var(--color-text) 82%, transparent); }
+.hero .row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; margin-top: var(--leading); }
+.btn-cta { color: #0b0817; background: linear-gradient(120deg, var(--color-accent-strong), var(--color-accent)); border: 0;
+  font-family: var(--font-body); font-weight: 600; font-size: 15px; padding: 12px 22px;
+  box-shadow: 0 0 32px color-mix(in srgb, var(--color-accent-strong) 35%, transparent); }
+.btn-cta:hover { background: linear-gradient(120deg, var(--color-accent), var(--color-accent-300)); }
+.btn-cta:active { background: var(--color-accent-strong); color: var(--color-accent-100); }
+.micro { font-size: 12.5px; line-height: var(--half); color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+
+/* ——— report mockup ——— */
+.report { position: relative; border: 1px solid var(--color-divider); border-radius: var(--radius-lg, 12px);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--color-accent-900) 55%, var(--color-surface)), var(--color-surface) 55%);
+  padding: clamp(20px, 4vw, 32px); box-shadow: var(--shadow-lg, 0 24px 64px rgba(0,0,0,.5)); }
+.report::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(120deg, color-mix(in srgb, var(--color-accent) 35%, transparent), transparent 30%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px; }
+.report-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+.report-head .t { font-family: var(--font-body); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent); font-weight: 600; }
+.report-head .live { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--color-accent-300); }
+.report-head .live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+.score-row { display: flex; align-items: center; gap: clamp(16px, 3vw, 28px); margin-bottom: 22px; }
+.gauge { position: relative; width: clamp(108px, 16vw, 132px); flex: none; }
+.gauge svg { display: block; width: 100%; height: auto; }
+.gauge .val { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.gauge .n { font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 4.5vw, 38px);
+  line-height: 1; color: var(--color-text); font-feature-settings: "tnum" 1; }
+.gauge .of { font-size: 11px; color: color-mix(in srgb, var(--color-text) 55%, transparent); margin-top: 3px; }
+.score-copy .lbl { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent); margin: 0 0 6px; }
+.score-copy .big { font-family: var(--font-heading); font-size: clamp(19px, 2.6vw, 23px); line-height: 1.25; margin: 0; }
+.score-copy .big strong { color: var(--color-accent-300); font-weight: 600; }
+.bars { display: grid; gap: 12px; }
+.bar { display: grid; grid-template-columns: minmax(84px, 110px) 1fr auto; align-items: center; gap: 10px; font-size: 12px; }
+.bar .who { color: color-mix(in srgb, var(--color-text) 70%, transparent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar .track { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--color-text) 8%, transparent); overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 3px; width: 0; transition: width 1.4s cubic-bezier(.22,.8,.24,1); }
+.bar.rival .fill { background: color-mix(in srgb, var(--color-text) 38%, transparent); }
+.bar.you .fill { background: linear-gradient(90deg, var(--color-accent-strong), var(--color-accent)); box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent) 45%, transparent); }
+.bar .pts { font-feature-settings: "tnum" 1; color: color-mix(in srgb, var(--color-text) 60%, transparent); }
+.bar.you .who, .bar.you .pts { color: var(--color-accent-300); font-weight: 600; }
+.report-foot { display: flex; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 16px;
+  border-top: 1px solid var(--color-divider); font-size: 12px; }
+.report-foot .k { color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+.report-foot .v { font-feature-settings: "tnum" 1; color: var(--color-accent-300); font-weight: 600; }
+
+/* ——— seções ——— */
+section[id] { scroll-margin-top: 24px; }
+.sec { padding: calc(3 * var(--leading)) 0 calc(2.5 * var(--leading)); }
+.sec-title { font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.12; margin: 0; max-width: 24ch; }
+.sec-sub { font-size: 15.5px; line-height: var(--leading); color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  margin: var(--half) 0 0; max-width: var(--measure); }
+
+/* dor — cards full-screen empilhados (sticky stack, efeito livro) */
+.stack { position: relative; }
+.stack-panel { position: sticky; top: 0; height: 100svh; box-sizing: border-box;
+  display: grid; padding: clamp(14px, 2.5vh, 28px) var(--edge); }
+.stack-card { position: relative; overflow: hidden; width: 100%; max-width: 1100px; margin: 0 auto;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 22%, transparent);
+  border-radius: clamp(16px, 2.5vw, 28px);
+  display: grid; align-content: center; padding: clamp(28px, 7vw, 96px);
+  box-shadow: 0 -18px 60px rgba(0,0,0,.65);
+  transform-origin: center top; }
+.stack-panel:nth-child(1) .stack-card { background: linear-gradient(160deg, #171129, #0c0a12 60%); }
+.stack-panel:nth-child(2) .stack-card { background: linear-gradient(160deg, #12102b, #0a090f 60%); }
+.stack-panel:nth-child(3) .stack-card { background: linear-gradient(160deg, #1a1230, #0d0a14 60%); }
+.stack-card::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(720px 380px at 85% -10%, color-mix(in srgb, var(--color-accent-strong) 14%, transparent), transparent 65%); }
+.stack-card .bgslot { position: absolute; inset: 0; z-index: 0; }
+.stack-card .bgslot image-slot { width: 100%; height: 100%; }
+.stack-card .scrim { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(120deg, rgba(8,8,8,.78), rgba(8,8,8,.35) 70%); }
+.stack-card image-slot::part(frame) { background: rgba(255,255,255,.04); }
+.stack-card image-slot::part(empty) { color: rgba(236,233,244,.85); }
+.stack-card image-slot::part(ring) { border: 1.5px dashed rgba(139,124,248,.55); margin: 14px; }
+.stack-card .idx, .stack-card .n, .stack-card p.tx { position: relative; z-index: 2; }
+.stack-card .idx { font-family: var(--font-body); font-size: 12px; letter-spacing: 0.16em; font-weight: 600;
+  color: var(--color-accent); font-feature-settings: "tnum" 1; margin: 0 0 var(--leading); text-transform: uppercase; }
+.stack-card .n { font-family: var(--font-heading); font-style: italic; font-weight: 600;
+  font-size: clamp(44px, 8vw, 96px); line-height: 1.02; color: var(--color-text); margin: 0; }
+.stack-card .n em { font-style: italic; color: var(--color-accent); }
+.stack-card p.tx { font-size: clamp(16px, 2.2vw, 21px); line-height: 1.55; margin: var(--leading) 0 0;
+  max-width: 44ch; color: color-mix(in srgb, var(--color-text) 78%, transparent); }
+
+/* entregáveis */
+.gets { margin-top: calc(1.5 * var(--leading)); }
+.get { display: grid; grid-template-columns: 44px 1fr; gap: 8px 18px; padding: var(--leading) 0; align-items: start; }
+.get + .get { position: relative; }
+.get + .get::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-neutral-700) 48px calc(100% - 48px), transparent); }
+.get .ico { width: 44px; height: 44px; border-radius: 10px; display: grid; place-content: center;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+  background: color-mix(in srgb, var(--color-accent-900) 70%, transparent); color: var(--color-accent); }
+.get .ico svg { display: block; }
+.get h3 { font-family: var(--font-heading); font-weight: 600; font-size: 23px; line-height: 1.2; margin: 0; }
+.get p { font-size: 15px; line-height: 24px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent); max-width: 52ch; }
+@media (min-width: 760px) { .get { grid-template-columns: 44px minmax(0, 280px) 1fr; align-items: baseline; }
+  .get .ico { align-self: start; } .get p { margin-top: 0; } }
+
+/* como funciona */
+.steps { display: grid; gap: var(--leading); margin-top: calc(1.5 * var(--leading)); counter-reset: step; }
+@media (min-width: 760px) { .steps { grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 56px); } }
+.step { counter-increment: step; position: relative; padding-top: var(--half); }
+.step::before { content: "0" counter(step); font-family: var(--font-heading); font-style: italic;
+  font-size: 44px; line-height: 1; color: color-mix(in srgb, var(--color-accent) 55%, transparent); display: block; margin-bottom: 12px; }
+.step h3 { font-family: var(--font-body); font-weight: 600; font-size: 16px; line-height: 24px; margin: 0; }
+.step p { font-size: 14.5px; line-height: 24px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent); }
+
+/* ——— formulário (banda saturada, full-bleed) ——— */
+.band { position: relative; background:
+    radial-gradient(900px 420px at 85% -40%,
+      color-mix(in srgb, var(--color-section-glow) 80%, transparent), transparent 64%),
+    var(--color-section);
+  padding: calc(2.5 * var(--leading)) 0; overflow: hidden; }
+.band::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("uploads/pasted-1784291992289-0.png") left center / cover no-repeat; opacity: .9; }
+.band::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-section) 55%, transparent) 55%, var(--color-section) 92%); }
+.band .wrap { position: relative; z-index: 1; }
+.band .grid { display: grid; gap: calc(1.5 * var(--leading)) clamp(32px, 5vw, 88px); }
+@media (min-width: 900px) { .band .grid { grid-template-columns: minmax(0, 8fr) minmax(0, 9fr); align-items: start; } }
+.band .sec-title { color: var(--color-text); }
+.band .price { font-family: var(--font-heading); font-size: clamp(40px, 5vw, 56px); font-weight: 600; line-height: 1;
+  margin: var(--leading) 0 0; color: var(--color-text); font-feature-settings: "tnum" 1; }
+.band .price small { font-size: 15px; font-family: var(--font-body); font-weight: 400;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent); margin-left: 8px; }
+.band .checks { list-style: none; margin: var(--leading) 0 0; padding: 0; display: grid; gap: 10px; }
+.band .checks li { display: flex; gap: 10px; font-size: 14.5px; line-height: 22px;
+  color: color-mix(in srgb, var(--color-text) 80%, transparent); }
+.band .checks svg { flex: none; margin-top: 3px; color: var(--color-accent-300); }
+.form-card { background: color-mix(in srgb, #0b0817 82%, transparent); border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  border-radius: var(--radius-lg, 12px); padding: clamp(20px, 4vw, 32px); backdrop-filter: blur(10px);
+  box-shadow: 0 30px 70px rgba(0,0,0,.5); will-change: transform;
+  animation: floatCard 6s ease-in-out infinite; transition: box-shadow .4s ease; }
+@keyframes floatCard { 50% { transform: translateY(-10px); } }
+.form-card:hover { box-shadow: 0 40px 90px rgba(0,0,0,.6), 0 0 0 1px color-mix(in srgb, var(--color-accent) 45%, transparent); }
+@media (prefers-reduced-motion: reduce) { .form-card { animation: none; } }
+.form-card .field { margin-bottom: 14px; }
+.form-card .input { background: color-mix(in srgb, var(--color-text) 5%, transparent); min-height: 44px; font-size: 15px; }
+.form-grid2 { display: grid; gap: 0 14px; }
+@media (min-width: 560px) { .form-grid2 { grid-template-columns: 1fr 1fr; } }
+.form-card .btn-cta { width: 100%; justify-content: center; min-height: 48px; margin-top: 6px; }
+.form-note { text-align: center; margin: 12px 0 0; font-size: 12.5px; line-height: 18px;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+.form-ok { text-align: center; padding: calc(2 * var(--leading)) 12px; }
+.form-ok h3 { font-family: var(--font-heading); font-size: 26px; font-weight: 600; margin: 0 0 8px; }
+.form-ok p { font-size: 14.5px; line-height: 22px; color: color-mix(in srgb, var(--color-text) 70%, transparent); margin: 0; }
+
+/* confiança */
+.trust { display: grid; gap: var(--space-3); margin-top: calc(1.5 * var(--leading)); }
+@media (min-width: 760px) { .trust { grid-template-columns: repeat(3, 1fr); } }
+.badge { display: flex; gap: 14px; align-items: start; padding: 20px; border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md, 8px); }
+.badge svg { flex: none; color: var(--color-accent); margin-top: 2px; }
+.badge b { display: block; font-size: 14.5px; font-weight: 600; line-height: 20px; }
+.badge span { display: block; font-size: 13px; line-height: 19px; margin-top: 4px;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent); }
+
+/* FAQ */
+.faq { max-width: 720px; margin-top: calc(1.5 * var(--leading)); }
+.faq details { border-bottom: 1px solid var(--color-divider); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; padding: 20px 4px; font-family: var(--font-heading); font-weight: 600; font-size: 21px; line-height: 1.25; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--color-accent-300); }
+.faq summary .x { flex: none; width: 14px; height: 14px; position: relative; color: var(--color-accent); }
+.faq summary .x::before, .faq summary .x::after { content: ""; position: absolute; background: currentColor; transition: transform .25s ease; }
+.faq summary .x::before { left: 0; right: 0; top: 6px; height: 2px; }
+.faq summary .x::after { top: 0; bottom: 0; left: 6px; width: 2px; }
+.faq details[open] summary .x::after { transform: scaleY(0); }
+.faq .a { padding: 0 4px 22px; font-size: 15px; line-height: 24px; max-width: 60ch;
+  color: color-mix(in srgb, var(--color-text) 72%, transparent); }
+.faq .a p { margin: 0; }
+
+/* footer */
+footer { padding: calc(2 * var(--leading)) 0 calc(2.5 * var(--leading)); font-size: 13px; line-height: 22px;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+footer .frow { display: flex; flex-wrap: wrap; gap: 8px 28px; justify-content: space-between; align-items: baseline; }
+footer .fb { font-family: var(--font-heading); font-size: 18px; font-weight: 600; color: var(--color-text); }
+footer .fb em { font-style: normal; color: var(--color-accent); }
+footer a { text-decoration: none; }
+
+/* ——— scroll reveal ——— */
+.rv { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.22,.8,.24,1); }
+.rv.in { opacity: 1; transform: none; }
+.rv-l { opacity: 0; transform: translateX(-56px); transition: opacity .8s ease, transform .8s cubic-bezier(.22,.8,.24,1); }
+.rv-r { opacity: 0; transform: translateX(56px); transition: opacity .8s ease, transform .8s cubic-bezier(.22,.8,.24,1); }
+.rv-l.in, .rv-r.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .rv, .rv-l, .rv-r { opacity: 1; transform: none; transition: none; } .bar .fill { transition: none; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-brand">MX<em>.</em> Raio-X do Google</span>
+  <a href="#recebe">O que você recebe</a>
+  <a href="#como">Como funciona</a>
+  <a href="#faq">FAQ</a>
+  <a class="btn btn-primary" href="#diagnostico" style="text-decoration:none">Fazer diagnóstico</a>
+</nav>
+
+<div class="hero-bg">
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <span class="kicker">Diagnóstico automatizado · MX Digital</span>
+      <h1 class="display">Descubra por que seus concorrentes aparecem no Google <span class="hl">— e você não.</span></h1>
+      <p class="sub">O Raio-X do Google varre a sua presença no Google, compara com os concorrentes reais da sua cidade e entrega um relatório completo com plano de ação — em minutos.</p>
+      <div class="row">
+        <a class="btn btn-cta" href="#diagnostico" style="text-decoration:none">Fazer meu diagnóstico — R$97</a>
+        <span class="micro">Pagamento único · Relatório em minutos</span>
+      </div>
+    </div>
+
+    <div class="report rv" id="mockup" aria-label="Exemplo de relatório do Raio-X do Google">
+      <div class="report-head">
+        <span class="t">Relatório · Raio-X do Google</span>
+        <span class="live">Análise concluída</span>
+      </div>
+      <div class="score-row">
+        <div class="gauge">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(236,233,244,0.09)" stroke-width="8"/>
+            <circle id="gauge-arc" cx="60" cy="60" r="52" fill="none" stroke="url(#ggrad)" stroke-width="8"
+              stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"
+              transform="rotate(-90 60 60)" style="transition: stroke-dashoffset 1.6s cubic-bezier(.22,.8,.24,1)"/>
+            <defs><linearGradient id="ggrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#6D5CF5"/><stop offset="1" stop-color="#8B7CF8"/>
+            </linearGradient></defs>
+          </svg>
+          <div class="val"><span class="n"><span id="score">0,0</span></span><span class="of">/ 10</span></div>
+        </div>
+        <div class="score-copy">
+          <p class="lbl">Nota de presença</p>
+          <p class="big">Seu negócio está <strong>atrás de 3 concorrentes</strong> na sua região.</p>
+        </div>
+      </div>
+      <div class="bars" aria-label="Comparação com concorrentes">
+        <div class="bar rival"><span class="who">Concorrente A</span><span class="track"><span class="fill" data-w="92%"></span></span><span class="pts">9,2</span></div>
+        <div class="bar rival"><span class="who">Concorrente B</span><span class="track"><span class="fill" data-w="85%"></span></span><span class="pts">8,5</span></div>
+        <div class="bar rival"><span class="who">Concorrente C</span><span class="track"><span class="fill" data-w="74%"></span></span><span class="pts">7,4</span></div>
+        <div class="bar you"><span class="who">Seu negócio</span><span class="track"><span class="fill" data-w="62%"></span></span><span class="pts">6,2</span></div>
+      </div>
+      <div class="report-foot">
+        <div><span class="k">Clientes perdidos/mês</span><br><span class="v">≈ <span id="lost">0</span> buscas</span></div>
+        <div style="text-align:right"><span class="k">Plano de ação</span><br><span class="v">7 e 30 dias</span></div>
+      </div>
+    </div>
+  </header>
+</div>
+</div>
+
+<hr class="rule" />
+
+<div class="wrap">
+  <section class="sec" id="dor">
+    <span class="kicker rv">O custo de ser invisível</span>
+    <h2 class="sec-title rv">Todo dia, clientes procuram o que você vende. E encontram outro.</h2>
+  </section>
+</div>
+
+<div class="stack" aria-label="As três dores de quem não aparece no Google">
+  <div class="stack-panel">
+    <div class="stack-card">
+      <div class="bgslot"><image-slot id="pain-bg-1" shape="rect" placeholder="Imagem de fundo — card 01"></image-slot></div>
+      <div class="scrim"></div>
+      <p class="idx">01 / 03</p>
+      <h3 class="n"><em style="color: var(--color-neutral-100)">Invisível.</em></h3>
+      <p class="tx" style="color: var(--color-neutral-200)">Quem não aparece no Google não existe pra quem pesquisa. A busca é a nova vitrine — e a sua pode estar fechada.</p>
+    </div>
+  </div>
+  <div class="stack-panel">
+    <div class="stack-card">
+      <div class="bgslot"><image-slot id="pain-bg-2" shape="rect" placeholder="Imagem de fundo — card 02"></image-slot></div>
+      <div class="scrim"></div>
+      <p class="idx">02 / 03</p>
+      <h3 class="n"><em style="color: var(--color-neutral-200)">Ultrapassado.</em></h3>
+      <p class="tx" style="color: var(--color-neutral-200)">Seus concorrentes estão capturando os clientes que procuram exatamente o que você oferece.</p>
+    </div>
+  </div>
+  <div class="stack-panel">
+    <div class="stack-card">
+      <div class="bgslot"><image-slot id="pain-bg-3" shape="rect" placeholder="Imagem de fundo — card 03"></image-slot></div>
+      <div class="scrim"></div>
+      <p class="idx">03 / 03</p>
+      <h3 class="n"><em style="color: var(--color-bg)">No escuro.</em></h3>
+      <p class="tx">Você não sabe o que está errado — e nem por onde começar a consertar.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="sec" id="recebe" style="padding-top: calc(1.5 * var(--leading))">
+    <span class="kicker rv">O que você recebe</span>
+    <h2 class="sec-title rv">Um raio-x completo da sua presença no Google</h2>
+    <div class="gets">
+      <div class="get rv">
+        <span class="ico"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M207.06,80.67A111.24,111.24,0,0,0,128,48h-.4C66.07,48.21,16,99,16,161.13V184a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V160A111.25,111.25,0,0,0,207.06,80.67ZM224,184H119.71l54.76-75.3a8,8,0,0,0-12.94-9.42L99.92,184H32V161.13c0-3.08.15-6.12.43-9.13H56a8,8,0,0,0,0-16H35.27c10.32-38.86,44-68.24,84.73-71.66V88a8,8,0,0,0,16,0V64.33A96.14,96.14,0,0,1,221,136H200a8,8,0,0,0,0,16h23.67c.21,2.65.33,5.31.33,8Z"/></svg></span>
+        <h3>Nota de presença no Google</h3>
+        <p>Uma nota de 0 a 10 que resume como seu negócio aparece hoje: perfil, avaliações, fotos, informações e posicionamento na busca local.</p>
+      </div>
+      <div class="get rv">
+        <span class="ico"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></svg></span>
+        <h3>Análise dos concorrentes</h3>
+        <p>Quem aparece na sua frente na sua região, o que eles fazem melhor que você — e exatamente onde você está perdendo pontos.</p>
+      </div>
+      <div class="get rv">
+        <span class="ico"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M244,56v64a12,12,0,0,1-24,0V85l-75.51,75.52a12,12,0,0,1-17,0L96,129,33.52,191.52a12,12,0,0,1-17-17l71-71a12,12,0,0,1,17,0L136,135l67-67H168a12,12,0,0,1,0-24h64A12,12,0,0,1,244,56Z" transform="scale(1 -1) translate(0 -256)"/></svg></span>
+        <h3>Estimativa de clientes perdidos por mês</h3>
+        <p>Quantas buscas na sua cidade estão indo pros concorrentes — e quanto isso representa em reais deixados na mesa todo mês.</p>
+      </div>
+      <div class="get rv">
+        <span class="ico"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-38.34-85.66a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L116,164.69l42.34-42.35A8,8,0,0,1,169.66,122.34Z"/></svg></span>
+        <h3>Plano de ação de 7 e 30 dias</h3>
+        <p>O que corrigir primeiro pra subir no Google: passos práticos e priorizados pra primeira semana e pro primeiro mês.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="como" style="padding-top: calc(1.5 * var(--leading))">
+    <span class="kicker rv">Como funciona</span>
+    <h2 class="sec-title rv">Três passos. Nenhuma reunião.</h2>
+    <div class="steps">
+      <div class="step rv"><h3>Informe seu negócio</h3><p>Diga o nome do seu negócio e a cidade. É tudo o que precisamos pra começar.</p></div>
+      <div class="step rv"><h3>A análise varre o Google</h3><p>Nossa análise examina sua presença no Google e compara com os concorrentes reais que aparecem na sua frente.</p></div>
+      <div class="step rv"><h3>Receba o relatório</h3><p>Em minutos, o relatório completo chega no seu e-mail e WhatsApp — com nota, comparativo e plano de ação.</p></div>
+    </div>
+  </section>
+</div>
+
+<section class="band" id="diagnostico">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="kicker rv" style="color: var(--color-accent-300)">Comece agora</span>
+        <h2 class="sec-title rv">Gere o raio-x do seu negócio</h2>
+        <p class="price rv">R$97 <small>pagamento único</small></p>
+        <ul class="checks rv">
+          <li><svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg>Nota de presença + comparativo com concorrentes</li>
+          <li><svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg>Estimativa de clientes perdidos por mês, em R$</li>
+          <li><svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg>Plano de ação de 7 e 30 dias, priorizado</li>
+        </ul>
+      </div>
+      <form class="form-card" id="lead-form" novalidate>
+        <div class="field"><label for="f-nome">Nome do negócio</label><input class="input" id="f-nome" name="negocio" type="text" placeholder="Ex.: Barbearia Imperial" required></div>
+        <div class="form-grid2">
+          <div class="field"><label for="f-cidade">Cidade</label><input class="input" id="f-cidade" name="cidade" type="text" placeholder="Ex.: Lajeado – RS" required></div>
+          <div class="field"><label for="f-nicho">Nicho / segmento</label><input class="input" id="f-nicho" name="nicho" type="text" placeholder="Ex.: barbearia, clínica…" required></div>
+        </div>
+        <div class="form-grid2">
+          <div class="field"><label for="f-email">E-mail</label><input class="input" id="f-email" name="email" type="email" placeholder="voce@email.com" required></div>
+          <div class="field"><label for="f-zap">WhatsApp</label><input class="input" id="f-zap" name="whatsapp" type="tel" placeholder="(51) 99999-9999" required></div>
+        </div>
+        <button type="submit" class="btn btn-cta">Gerar meu diagnóstico — R$97</button>
+        <p class="form-note">Pagamento único e seguro. Relatório entregue em minutos.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="sec" id="confianca" style="padding-bottom: calc(1.5 * var(--leading))">
+    <div class="trust">
+      <div class="badge rv">
+        <svg width="24" height="24" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm45.66-125.66a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,140.69l50.34-50.35A8,8,0,0,1,173.66,90.34Z"/></svg>
+        <div><b>Análise baseada em dados reais do Google</b><span>Nada de achismo: o diagnóstico usa o que o Google mostra hoje sobre o seu negócio e seus concorrentes.</span></div>
+      </div>
+      <div class="badge rv">
+        <svg width="24" height="24" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A16,16,0,0,0,32,56v58.77c0,89.62,75.82,119.34,91,124.39a15.53,15.53,0,0,0,10,0c15.2-5.05,91-34.77,91-124.39V56A16,16,0,0,0,208,40Zm0,74.79c0,78.42-66.35,104.62-80,109.18-13.53-4.51-80-30.69-80-109.18V56H208Z"/></svg>
+        <div><b>Pagamento 100% seguro</b><span>Transação única de R$97, processada com criptografia. Sem mensalidade, sem surpresa.</span></div>
+      </div>
+      <div class="badge rv">
+        <svg width="24" height="24" viewBox="0 0 256 256" fill="currentColor"><path d="M240,128a15.79,15.79,0,0,1-10.5,15l-63.44,23.07L143,229.5a16,16,0,0,1-30,0L89.94,166,26.5,143a16,16,0,0,1,0-30L89.94,90,113,26.5a16,16,0,0,1,30,0L166.06,90,229.5,113A15.79,15.79,0,0,1,240,128Z"/></svg>
+        <div><b>MX Digital</b><span>Feito pela MX Digital, especialista em presença digital de negócios locais. mxdigital.ia.br</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="faq" style="padding-top: calc(1.5 * var(--leading))">
+    <span class="kicker rv">Perguntas frequentes</span>
+    <h2 class="sec-title rv">Antes de você perguntar</h2>
+    <div class="faq rv">
+      <details>
+        <summary>Como a análise é feita?<span class="x" aria-hidden="true"></span></summary>
+        <div class="a"><p>Nossa análise varre os dados públicos do Google sobre o seu negócio — perfil, avaliações, fotos, informações e posicionamento na busca local — e compara com os concorrentes que aparecem na sua frente na sua região. O resultado vira uma nota, um comparativo e um plano de ação.</p></div>
+      </details>
+      <details>
+        <summary>Em quanto tempo recebo?<span class="x" aria-hidden="true"></span></summary>
+        <div class="a"><p>Em minutos. Assim que o pagamento é confirmado, a análise roda automaticamente e o relatório completo chega no seu e-mail e WhatsApp.</p></div>
+      </details>
+      <details>
+        <summary>Funciona pra qualquer tipo de negócio?<span class="x" aria-hidden="true"></span></summary>
+        <div class="a"><p>Sim — o Raio-X foi feito pra negócios locais: barbearias, clínicas, restaurantes, lojas, prestadores de serviço e qualquer negócio que dependa de clientes da região encontrarem ele no Google.</p></div>
+      </details>
+      <details>
+        <summary>E se eu não tiver Google Meu Negócio?<span class="x" aria-hidden="true"></span></summary>
+        <div class="a"><p>Melhor ainda — o diagnóstico mostra exatamente o que você está perdendo por não ter, quanto os concorrentes estão capturando, e o plano de ação começa pela criação do seu perfil do jeito certo.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <footer>
+    <div class="frow">
+      <span class="fb">MX<em>.</em> Digital</span>
+      <span><a href="https://mxdigital.ia.br">mxdigital.ia.br</a> · <a href="https://instagram.com/mxdigital.ia">@mxdigital.ia</a></span>
+    </div>
+  </footer>
+</div>
+
+<script>
+(() => {
+  // scroll reveal — repete nos dois sentidos: sai da tela, esconde; volta, revela de novo
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle('in', e.isIntersecting);
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.step, .badge, .faq details, .stack-card .idx, .stack-card .n, .stack-card .tx, .hero .row, .hero .sub, .display, .form-card .field, .form-card .btn-cta, .form-note, .band .checks li, .band .price, footer .frow').forEach(el => el.classList.add('rv'));
+  // entregáveis: ícone+título vindo da esquerda, descrição da direita, encontrando no meio
+  document.querySelectorAll('.get').forEach(g => {
+    g.querySelector('.ico').classList.add('rv-l');
+    g.querySelector('h3').classList.add('rv-l');
+    g.querySelector('p').classList.add('rv-r');
+  });
+  document.querySelectorAll('.rv, .rv-l, .rv-r').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(el); });
+
+  // animated report mockup: gauge, score counter, bars, lost-clients counter
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  function count(el, to, dur, fmt) {
+    const t0 = performance.now();
+    (function tick(now) {
+      const p = Math.min(1, (now - t0) / dur);
+      el.textContent = fmt(to * ease(p));
+      if (p < 1) requestAnimationFrame(tick);
+    })(t0);
+  }
+  const mock = document.getElementById('mockup');
+  const arc = document.getElementById('gauge-arc');
+  const C = 326.7;
+  let mockTimers = [];
+  function resetMock() {
+    mockTimers.forEach(clearTimeout); mockTimers = [];
+    arc.style.strokeDashoffset = C;
+    document.getElementById('score').textContent = '0,0';
+    document.getElementById('lost').textContent = '0';
+    document.querySelectorAll('.bar .fill').forEach(f => { f.style.width = '0'; });
+  }
+  function playMock() {
+    requestAnimationFrame(() => { arc.style.strokeDashoffset = (C * (1 - 6.2 / 10)).toFixed(1); });
+    count(document.getElementById('score'), 6.2, 1600, v => v.toFixed(1).replace('.', ','));
+    count(document.getElementById('lost'), 137, 1600, v => Math.round(v).toString());
+    document.querySelectorAll('.bar .fill').forEach((f, i) => {
+      mockTimers.push(setTimeout(() => { f.style.width = f.dataset.w; }, 150 + i * 120));
+    });
+  }
+  const mio = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) playMock(); else resetMock();
+  }, { threshold: 0.35 });
+  mio.observe(mock);
+
+  // form: demo confirmation state
+  document.getElementById('lead-form').addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const form = ev.currentTarget;
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    form.innerHTML = '<div class="form-ok"><h3>Quase lá!</h3><p>Aqui entra o redirecionamento pro checkout de R$97.<br>Após o pagamento, a análise roda e o relatório chega em minutos.</p></div>';
+  });
+
+  // FAQ: close others on open
+  document.querySelectorAll('.faq details').forEach(d => {
+    d.addEventListener('toggle', () => {
+      if (d.open) document.querySelectorAll('.faq details[open]').forEach(o => { if (o !== d) o.open = false; });
+    });
+  });
+})();
+</script>
+</body>
+</html>
