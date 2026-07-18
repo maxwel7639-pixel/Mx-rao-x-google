@@ -1,0 +1,10 @@
+{
+  "name": "mx-raio-x-google",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.112.3",
+    "@vercel/functions": "^3.7.5"
+  }
+}
