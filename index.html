@@ -270,6 +270,33 @@ footer .fb { font-family: var(--font-heading); font-size: 18px; font-weight: 600
 footer .fb em { font-style: normal; color: var(--color-accent); }
 footer a { text-decoration: none; }
 
+/* ——— mobile: cards empilham (sticky stack, mesmo efeito do portfólio) ——— */
+@media (max-width: 759px) {
+  /* sticky dentro de grid fica preso à célula — os grupos viram bloco no mobile */
+  .steps, .trust { display: block; }
+
+  .get, .step, .badge {
+    position: sticky;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 24%, transparent);
+    border-radius: 16px;
+    background: linear-gradient(160deg, #171129, #0c0a12 70%);
+    box-shadow: 0 -14px 36px rgba(0,0,0,.55);
+    padding: 22px 20px;
+    margin-bottom: 14px;
+  }
+  .get { padding-bottom: 24px; }
+  .get + .get { position: sticky; }
+  .get + .get::before { display: none; }
+  .step { padding-top: 18px; }
+  .step + .step, .badge + .badge { margin-top: 0; }
+
+  /* deck: cada card pina um pouco abaixo do anterior e cobre ele */
+  .get:nth-child(1), .step:nth-child(1), .badge:nth-child(1) { top: 14px; z-index: 1; }
+  .get:nth-child(2), .step:nth-child(2), .badge:nth-child(2) { top: 26px; z-index: 2; }
+  .get:nth-child(3), .step:nth-child(3), .badge:nth-child(3) { top: 38px; z-index: 3; }
+  .get:nth-child(4) { top: 50px; z-index: 4; }
+}
+
 /* ——— scroll reveal ——— */
 .rv { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.22,.8,.24,1); }
 .rv.in { opacity: 1; transform: none; }
