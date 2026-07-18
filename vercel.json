@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/webhook-perfectpay.js": {
+      "maxDuration": 300
+    }
+  }
+}
